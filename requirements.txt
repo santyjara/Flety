@@ -1,0 +1,7 @@
+black~=21.12b0
+isort~=5.10.1
+environs~=9.4.0
+sqlalchemy~=1.4.29
+pytest~=6.2.5
+asyncpg~=0.23.0
+pydantic~=1.9.0

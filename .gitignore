@@ -1,0 +1,31 @@
+### Python template
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+downloads/
+
+# Unit test / coverage reports
+.pytest_cache/
+
+# Sphinx documentation
+docs/_build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environments
+venv/
+.env
+
+### macOS template
+# General
+.DS_Store
+.idea
+
+
+
