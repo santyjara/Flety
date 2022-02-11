@@ -1,25 +1,14 @@
-from abc import ABC, abstractmethod
+from typing import Any
 
-from gateways.database.factory import database_gateway_factory
+from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
 
-class Entity(ABC):
-    database = database_gateway_factory()
+@as_declarative()
+class Base:
+    id: Any
+    __name__: str
 
-    @abstractmethod
-    def create(self):
-        pass
-
-    @classmethod
-    @abstractmethod
-    def read(cls, id_: int):
-        pass
-
-    @abstractmethod
-    def update(self):
-        pass
-
-    @classmethod
-    @abstractmethod
-    def delete(cls, id_: int):
-        pass
+    # Generate __tablename__ automatically
+    @declared_attr
+    def __tablename__(cls) -> str:
+        return cls.__name__.lower()
