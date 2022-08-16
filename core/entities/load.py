@@ -3,20 +3,24 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from .address import Address
+
 
 class Load(BaseModel):
-    """Class that defines a single freight. Each freight represents Any shipment
-    over 150 lbs. Freight shipping is the transportation of goods, commodities
-    and cargo in bulk by ship, aircraft, truck or intermodal via train and road.
-    """
-
-    id: Optional[int]
-    pick_up_date: datetime
-    origin_address_id: Optional[int]
-    destiny_address_id: Optional[int]
-    weight: int
+    pick_up_date: Optional[datetime]
+    origin_city: str
+    origin_department: str
+    origin_address: Address
+    destiny_address: Address
+    weight: float
     length: float
     extra_info: str
     contact_name: str
     contact_phone: str
     contact_email: str
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
+
+    class Config:
+        orm_mode = True
+        arbitrary_types_allowed = True

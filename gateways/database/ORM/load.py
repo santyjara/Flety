@@ -1,4 +1,15 @@
-from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Integer, String
+from datetime import datetime
+
+from sqlalchemy import (
+    Boolean,
+    Column,
+    DateTime,
+    Enum,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+)
 from sqlalchemy.orm import relationship
 
 from gateways.database.ORM import Base
@@ -14,20 +25,32 @@ class LoadORM(Base):
     pick_up_date = Column(DateTime(timezone=True), nullable=False)
     origin_city = Column(String(50), index=True, nullable=False)
     origin_address_id = Column(Integer, ForeignKey("address.id"))
-    origin_address = relationship("AddressORM")
+    origin_address = relationship("AddressORM", foreign_keys=[origin_address_id])
     destiny_city = Column(String(50), index=True, nullable=False)
     destiny_address_id = Column(Integer, ForeignKey("address.id"))
-    destiny_address = relationship("AddressORM")
+    destiny_address = relationship("AddressORM", foreign_keys=[destiny_address_id])
     contact_id = Column(Integer, ForeignKey("contact.id"))
-    contact = relationship("contactORM")
+    contact = relationship("ContactORM")
     product_type = Column(String(50), nullable=False)
     requirements = Column(String)
     vehicle_type_id = Column(Integer, ForeignKey("vehicle_type.id"))
     vehicle_type = relationship("VehicleTypeORM")
-    load_type_id = Column(Integer, ForeignKey("load_type.id"))
-    load_type = relationship("LoadTypeORM")
-    trailer_type_id = Column(Integer, ForeignKey("trailer_type.id"))
-    trailer_type = relationship("TrailerTypeORM")
+    load_type = Column(
+        Enum(
+            "combustible",
+            "big bags",
+            name="load_type",
+        ),
+        nullable=False,
+    )
+    trailer_type = Column(
+        Enum(
+            "furgón",
+            "estacas",
+            name="trailer_type",
+        ),
+        nullable=False,
+    )
     weight_kg = Column(Float)
     includes_loading = Column(Boolean, default=False, nullable=False)
     loading_cost = Column(Float)
@@ -38,5 +61,5 @@ class LoadORM(Base):
     assigned_vehicle = relationship("VehicleORM", backref="loads")
     assigned_company_id = Column(Integer, ForeignKey("transport_company.id"))
     assigned_company = relationship("TransportCompanyORM", backref="loads")
-    created_at = Column(DateTime(timezone=True), nullable=False)
-    updated_at = Column(DateTime(timezone=True))
+    created_at = Column(DateTime, default=datetime.utcnow())
+    updated_at = Column(DateTime)

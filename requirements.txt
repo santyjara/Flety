@@ -1,7 +1,14 @@
-black~=21.12b0
+black~=22.3.0
 isort~=5.10.1
 environs~=9.4.0
 sqlalchemy~=1.4.29
 pytest~=6.2.5
+pytest-asyncio~=0.18.3
+pytest-cov~=2.12.1
 asyncpg~=0.23.0
-pydantic~=1.9.0
+pydantic[email]~=1.9.0
+alembic~=1.7.6
+autoflake~=1.4
+fastapi~=0.75.0
+httpx~=0.22.0
+uvicorn~=0.17.6

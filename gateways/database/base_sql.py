@@ -2,10 +2,11 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict
 
 from core.entities import Load
-from utils.patterns import Singleton
+from core.schemas.address import AddressCreate
 
 
-class SQLDatabase(ABC, Singleton):
+class SQLDatabase(ABC):
+    # _____ CRUD Load
     @abstractmethod
     def create_load(self, load: Load) -> int:
         """
@@ -19,7 +20,6 @@ class SQLDatabase(ABC, Singleton):
         int
             Order id
         """
-        pass
 
     @abstractmethod
     def read_load(self, _id: str) -> Dict[str, Any]:
@@ -34,7 +34,6 @@ class SQLDatabase(ABC, Singleton):
         Dict[str, Any]
             Order body
         """
-        pass
 
     @abstractmethod
     def update_load(self, load: Load) -> int:
@@ -49,10 +48,9 @@ class SQLDatabase(ABC, Singleton):
         int
             Updated load id
         """
-        pass
 
     @abstractmethod
-    def delete_load(self, _id: str) -> str:
+    def delete_load(self, _id: str) -> int:
         """
         Parameters
         ----------
@@ -61,7 +59,40 @@ class SQLDatabase(ABC, Singleton):
 
         Returns
         -------
-        str
+        int
             Deleted load id
         """
-        pass
+
+    # _____ CRUD Address
+    @abstractmethod
+    def create_address(self, address: AddressCreate) -> int:
+        ...
+
+    @abstractmethod
+    def read_address(self, _id: str) -> Dict[str, Any]:
+        ...
+
+    @abstractmethod
+    def update_address(self, address: Dict[str, Any]) -> str:
+        ...
+
+    @abstractmethod
+    def delete_address(self, _id: str) -> str:
+        ...
+
+    # _____ CRUD Common
+    @abstractmethod
+    def fetch_vehicle_types(self):
+        ...
+
+    @abstractmethod
+    def fetch_load_types(self):
+        ...
+
+    @abstractmethod
+    def fetch_trailer_types(self):
+        ...
+
+    @abstractmethod
+    def fetch_user_roles(self):
+        ...

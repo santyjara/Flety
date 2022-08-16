@@ -1,17 +1,24 @@
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, constr, validator
 
+from core.entities.base import BaseCheckModel
 
-class Address(BaseModel):
-    id: Optional[int]
+
+class AddressBase(BaseCheckModel):
+    user_id: int
     address_line_1: constr(max_length=100)
     city: constr(max_length=30)
     zipcode: Optional[str]
     country: constr(max_length=30)
     lat: float
     long: float
-    user_id: Optional[int]
+
+
+class Address(AddressBase):
+    id: Optional[int]
+    created_at: datetime
 
     @validator("zipcode")
     def zipcode_length(cls, v):
